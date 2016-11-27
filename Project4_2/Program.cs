@@ -91,7 +91,7 @@ namespace Project4_2
             Console.WriteLine("My Fleet:");
             fleet.Print();
 
-            System.Console.ReadLine();
+            System.Console.ReadKey();
         }
     }
 }
