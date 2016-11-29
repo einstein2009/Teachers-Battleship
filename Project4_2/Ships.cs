@@ -23,8 +23,7 @@ namespace Project4_2
     /// </summary>
     class Ships
     {
-        // Need member called Fleet to contain a list of ships using a 
-        // generic container.
+        public LinkedList<Ship> Fleet;
 
         /// <summary>
         /// Adds the specified ship to the fleet of ships.  Throws an
@@ -37,6 +36,22 @@ namespace Project4_2
         {
             // Loop through all the ships in the fleet to see if they collide with newShip.
             // If none collide Add() to Fleet.
+            if (Fleet.Count == 0)
+            {
+                Fleet.AddFirst(newShip);
+            }
+            else
+            {
+                for (int i = 0; i < Fleet.Count; i++)
+                {
+                    if (Ships.Collision(newShip, Fleet.ElementAt(i)))
+                    {
+                        throw new Exception("The new ship collides with another placed ship.");
+                    }
+                }
+                Fleet.AddLast(newShip);
+            }
+
         }
 
         /// <summary>
@@ -45,6 +60,7 @@ namespace Project4_2
         public void clear()
         {
             // Clear Fleet.
+            Fleet = new LinkedList<Ship>();
         }
 
         /// <summary>
@@ -54,6 +70,17 @@ namespace Project4_2
         public bool SunkMyBattleship {
             // Loop through all the ships in the fleet to find the BattleShip.
             // Return true if the BattleShip is sunk.
+            get
+            {
+                for (int i = 0; i < Fleet.Count; i++)
+                {
+                    if (Fleet.ElementAt(i).IsBattleShip)
+                    {
+                        return Fleet.ElementAt(i).Sunk;
+                    }
+                }
+                throw new Exception("No battleship on board.");
+            }
         }
 
         /// <summary>
@@ -67,6 +94,14 @@ namespace Project4_2
             // Check to see if position is valid, if not throw ArgumentException.
             // Loop through all the ships in the Fleet and
             // call the Attack method on the ship to see if the attack hits.
+            Position attackpos = new Position();
+            for (int i = 0; i < Fleet.Count; i++)
+            {
+                if (Fleet.ElementAt(i).Attack(attackpos))
+                    return true;
+            }
+            return false;
+
         }
 
         /// <summary>
@@ -78,6 +113,12 @@ namespace Project4_2
         /// <returns><c>true</c> if the ships have a common position, <c>false</c> otherwise.</returns>
         static public bool Collision(Ship ship1, Ship ship2)
         {
+            for (int i = 0; i < ship1.Length; i++)
+            {
+                if (ship2.AtLocation(ship1.GetPosition(i)))
+                    return true;
+            }
+            return false;
         }
 
         /// <summary>

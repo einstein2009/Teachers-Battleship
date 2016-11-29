@@ -102,6 +102,18 @@ namespace Project4_2
             }
         }
 
+        public bool AtLocation(Position pos)
+        {
+            for (int i = 0; i < Length; i++)
+            {
+                if (Positions[i].Equals(pos))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         /// <summary>
         /// Gets or sets the ship color.
         /// </summary>

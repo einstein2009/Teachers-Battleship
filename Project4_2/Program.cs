@@ -27,7 +27,6 @@ namespace Project4_2
                 new BattleShip(),
                 new Cruiser(),
                 new Submarine(),
-                new PatrolBoat(),
                 new PatrolBoat()
             };
 
